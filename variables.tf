@@ -3,7 +3,7 @@ variable "cluster_timeouts" {
   type = object({
     create = string
     delete = string
-    update = string 
+    update = string
   })
   default = {
     create = null

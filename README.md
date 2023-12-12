@@ -1,3 +1,47 @@
+## Usage
+
+```hcl
+module "this" {
+  source = "git::github.com/wpartin/terraform-context?ref=v0.1.0"
+
+#   enabled   = false
+  env       = "sandbox"
+  namespace = "eks"
+
+  tags = {
+    Account     = "Development"
+    Cost-Center = "Engineering"
+    Domain      = "Containers"
+    Environment = "Sandbox"
+    Project     = "Goldenrod"
+  }
+}
+
+module "eks_cluster_label" {
+  source = "git::github.com/wpartin/terraform-context?ref=v0.1.0"
+
+  id     = "grasshopper-fabled-cottonfield"
+  region = "us-east-1"
+
+  context = module.this.context
+}
+
+module "eks_cluster" {
+  source = "../.."
+
+  enabled       = module.eks_cluster_label.enabled
+  # enable_openid = true
+  name          = module.eks_cluster_label.id_full
+  # subnet_ids    = ["subnet-01234567890abcdef"]
+
+  tags = module.eks_cluster_label.tags
+}
+
+output "eks_cluster" {
+  value = module.eks_cluster.this
+}
+```
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
@@ -35,7 +79,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_cluster_timeouts"></a> [cluster\_timeouts](#input\_cluster\_timeouts) | An object containing any desired timeout configurations. | <pre>object({<br>    create = string<br>    delete = string<br>    update = string <br>  })</pre> | <pre>{<br>  "create": null,<br>  "delete": null,<br>  "update": null<br>}</pre> | no |
+| <a name="input_cluster_timeouts"></a> [cluster\_timeouts](#input\_cluster\_timeouts) | An object containing any desired timeout configurations. | <pre>object({<br>    create = string<br>    delete = string<br>    update = string<br>  })</pre> | <pre>{<br>  "create": null,<br>  "delete": null,<br>  "update": null<br>}</pre> | no |
 | <a name="input_enable_openid"></a> [enable\_openid](#input\_enable\_openid) | Enable or disable openid configuration for IAM roles. | `bool` | `false` | no |
 | <a name="input_enabled"></a> [enabled](#input\_enabled) | Enable or disable the module. | `bool` | n/a | yes |
 | <a name="input_endpoint_private_access"></a> [endpoint\_private\_access](#input\_endpoint\_private\_access) | Enable private endpoint access. | `bool` | `true` | no |
@@ -51,5 +95,15 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_this"></a> [this](#output\_this) | n/a |
+| <a name="output_arn"></a> [arn](#output\_arn) | The ARN of the EKS cluster. |
+| <a name="output_endpoint"></a> [endpoint](#output\_endpoint) | The endpoint for the EKS cluster. |
+| <a name="output_id"></a> [id](#output\_id) | The ID of the EKS cluster. |
+| <a name="output_name"></a> [name](#output\_name) | The name of the EKS cluster. |
+| <a name="output_platform_version"></a> [platform\_version](#output\_platform\_version) | The platform version of the EKS cluster. |
+| <a name="output_public_access_cidrs"></a> [public\_access\_cidrs](#output\_public\_access\_cidrs) | The public access CIDR blocks if enabled. |
+| <a name="output_role_arn"></a> [role\_arn](#output\_role\_arn) | The role ARN being used on the EKS cluster. |
+| <a name="output_security_group_id"></a> [security\_group\_id](#output\_security\_group\_id) | The security group ID associated with the EKS cluster. |
+| <a name="output_subnet_ids"></a> [subnet\_ids](#output\_subnet\_ids) | The subnet IDs associated with the EKS cluster. |
+| <a name="output_version"></a> [version](#output\_version) | The version of the EKS cluster. |
+| <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id) | The VPC ID that the EKS cluster is associated with. |
 <!-- END_TF_DOCS -->
