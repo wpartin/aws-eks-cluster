@@ -10,6 +10,17 @@ resource "aws_eks_cluster" "this" {
     subnet_ids              = local.subnet_ids
   }
 
+  dynamic "encryption_config" {
+    for_each = var.enable_encryption ? [var.encryption_configuration] : []
+
+    content {
+      provider {
+        key_arn = var.create_kms_key ? module.kms.key_arn : encryption_config.value.key_arn
+      }
+      resources = encryption_config.value.resources
+    }
+  }
+
   tags = var.tags
 
   timeouts {

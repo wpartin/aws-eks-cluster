@@ -13,6 +13,11 @@ output "id" {
   value       = var.enabled ? aws_eks_cluster.this[var.name].cluster_id : null
 }
 
+output "kms_key_arn" {
+  description = "The KMS key ARN if created from this module usage."
+  value       = var.enabled && var.create_kms_key ? module.kms.key_arn : null
+}
+
 output "name" {
   description = "The name of the EKS cluster."
   value       = var.enabled ? aws_eks_cluster.this[var.name].name : null

@@ -12,15 +12,45 @@ variable "cluster_timeouts" {
   }
 }
 
+variable "create_kms_key" {
+  description = "Use KMS to generate a new KMS key for this cluster's encryption configuration."
+  type        = bool
+  default     = true
+}
+
+variable "description" {
+  description = "A description for the resources associated with this EKS cluster."
+  type        = string
+}
+
 variable "enabled" {
   description = "Enable or disable the module."
   type        = bool
+}
+
+variable "enable_encryption" {
+  description = "Enable or disable cluster encryption."
+  type        = bool
+  default     = true
 }
 
 variable "enable_openid" {
   description = "Enable or disable openid configuration for IAM roles."
   type        = bool
   default     = false
+}
+
+variable "encryption_configuration" {
+  description = "An object containing the configuration information for the cluster encryption settings."
+  type = object({
+    provider = optional(object({
+      key_arn = string
+    }))
+    resources = list(string)
+  })
+  default = {
+    resources = ["secrets"]
+  }
 }
 
 variable "endpoint_private_access" {
