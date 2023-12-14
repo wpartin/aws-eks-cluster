@@ -43,9 +43,9 @@ output "eks_cluster" {
 }
 ```
 
-```sh
-/* The examples/basic configuration will result in the following type of plan output: */
+## Example of Terraform plan output:
 
+```sh
 Terraform will perform the following actions:
 
   # module.eks_cluster.aws_cloudwatch_log_group.this["sandbox-use1-eks-grasshopper-fabled-cottonfield"] will be created
