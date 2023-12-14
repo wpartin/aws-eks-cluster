@@ -43,6 +43,215 @@ output "eks_cluster" {
 }
 ```
 
+```sh
+/* The examples/basic configuration will result in the following type of plan output: */
+
+Terraform will perform the following actions:
+
+  # module.eks_cluster.aws_cloudwatch_log_group.this["sandbox-use1-eks-grasshopper-fabled-cottonfield"] will be created
+  + resource "aws_cloudwatch_log_group" "this" {
+      + arn               = (known after apply)
+      + id                = (known after apply)
+      + log_group_class   = "STANDARD"
+      + name              = "/aws/eks/sandbox-use1-eks-grasshopper-fabled-cottonfield/cluster"
+      + name_prefix       = (known after apply)
+      + retention_in_days = 7
+      + skip_destroy      = false
+      + tags              = {
+          + "Account"     = "Development"
+          + "Cost-Center" = "Engineering"
+          + "Domain"      = "Containers"
+          + "Environment" = "Sandbox"
+          + "Project"     = "Goldenrod"
+        }
+      + tags_all          = {
+          + "Account"     = "Development"
+          + "Cost-Center" = "Engineering"
+          + "Domain"      = "Containers"
+          + "Environment" = "Sandbox"
+          + "Project"     = "Goldenrod"
+        }
+    }
+
+  # module.eks_cluster.aws_eks_cluster.this["sandbox-use1-eks-grasshopper-fabled-cottonfield"] will be created
+  + resource "aws_eks_cluster" "this" {
+      + arn                   = (known after apply)
+      + certificate_authority = (known after apply)
+      + cluster_id            = (known after apply)
+      + created_at            = (known after apply)
+      + endpoint              = (known after apply)
+      + id                    = (known after apply)
+      + identity              = (known after apply)
+      + name                  = "sandbox-use1-eks-grasshopper-fabled-cottonfield"
+      + platform_version      = (known after apply)
+      + role_arn              = (known after apply)
+      + status                = (known after apply)
+      + tags                  = {
+          + "Account"     = "Development"
+          + "Cost-Center" = "Engineering"
+          + "Domain"      = "Containers"
+          + "Environment" = "Sandbox"
+          + "Project"     = "Goldenrod"
+        }
+      + tags_all              = {
+          + "Account"     = "Development"
+          + "Cost-Center" = "Engineering"
+          + "Domain"      = "Containers"
+          + "Environment" = "Sandbox"
+          + "Project"     = "Goldenrod"
+        }
+      + version               = (known after apply)
+
+      + encryption_config {
+          + resources = [
+              + "secrets",
+            ]
+
+          + provider {
+              + key_arn = (known after apply)
+            }
+        }
+
+      + timeouts {}
+
+      + vpc_config {
+          + cluster_security_group_id = (known after apply)
+          + endpoint_private_access   = true
+          + endpoint_public_access    = false
+          + public_access_cidrs       = (known after apply)
+          + subnet_ids                = [
+              + "subnet-12345678",
+              + "subnet-abcdefgh",
+              + "subnet-abc123de",
+            ]
+          + vpc_id                    = (known after apply)
+        }
+    }
+
+  # module.eks_cluster.aws_iam_role.this["sandbox-use1-eks-grasshopper-fabled-cottonfield"] will be created
+  + resource "aws_iam_role" "this" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "sts:AssumeRole"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "eks.amazonaws.com"
+                        }
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + create_date           = (known after apply)
+      + force_detach_policies = false
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = "sandbox-use1-eks-grasshopper-fabled-cottonfield"
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + tags                  = {
+          + "Account"     = "Development"
+          + "Cost-Center" = "Engineering"
+          + "Domain"      = "Containers"
+          + "Environment" = "Sandbox"
+          + "Project"     = "Goldenrod"
+        }
+      + tags_all              = {
+          + "Account"     = "Development"
+          + "Cost-Center" = "Engineering"
+          + "Domain"      = "Containers"
+          + "Environment" = "Sandbox"
+          + "Project"     = "Goldenrod"
+        }
+      + unique_id             = (known after apply)
+    }
+
+  # module.eks_cluster.aws_iam_role_policy_attachment.amazon_eks_cluster_policy["sandbox-use1-eks-grasshopper-fabled-cottonfield"] will be created
+  + resource "aws_iam_role_policy_attachment" "amazon_eks_cluster_policy" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+      + role       = "sandbox-use1-eks-grasshopper-fabled-cottonfield"
+    }
+
+  # module.eks_cluster.aws_iam_role_policy_attachment.amazon_eks_vpc_resource_controller["sandbox-use1-eks-grasshopper-fabled-cottonfield"] will be created
+  + resource "aws_iam_role_policy_attachment" "amazon_eks_vpc_resource_controller" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
+      + role       = "sandbox-use1-eks-grasshopper-fabled-cottonfield"
+    }
+
+  # module.eks_cluster.module.kms.aws_kms_key.this["enabled"] will be created
+  + resource "aws_kms_key" "this" {
+      + arn                                = (known after apply)
+      + bypass_policy_lockout_safety_check = false
+      + customer_master_key_spec           = "SYMMETRIC_DEFAULT"
+      + deletion_window_in_days            = 30
+      + description                        = "test EKS cluster"
+      + enable_key_rotation                = false
+      + id                                 = (known after apply)
+      + is_enabled                         = true
+      + key_id                             = (known after apply)
+      + key_usage                          = "ENCRYPT_DECRYPT"
+      + multi_region                       = (known after apply)
+      + policy                             = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "kms:*"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + AWS = "0123456789012"
+                        }
+                      + Resource  = "*"
+                      + Sid       = "enable-IAM-user-permissions"
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + tags                               = {
+          + "Account"     = "Development"
+          + "Cost-Center" = "Engineering"
+          + "Domain"      = "Containers"
+          + "Environment" = "Sandbox"
+          + "Project"     = "Goldenrod"
+        }
+      + tags_all                           = {
+          + "Account"     = "Development"
+          + "Cost-Center" = "Engineering"
+          + "Domain"      = "Containers"
+          + "Environment" = "Sandbox"
+          + "Project"     = "Goldenrod"
+        }
+    }
+
+Plan: 6 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + eks_cluster = {
+      + arn                 = (known after apply)
+      + endpoint            = (known after apply)
+      + id                  = (known after apply)
+      + kms_key_arn         = (known after apply)
+      + name                = "sandbox-use1-eks-grasshopper-fabled-cottonfield"
+      + platform_version    = (known after apply)
+      + public_access_cidrs = null
+      + role_arn            = (known after apply)
+      + security_group_id   = (known after apply)
+      + subnet_ids          = [
+          + "subnet-12345678",
+          + "subnet-abcdefgh",
+          + "subnet-abc123de",
+        ]
+      + version             = (known after apply)
+      + vpc_id              = (known after apply)
+    }
+```
+
 <!-- BEGIN_TF_DOCS -->
 
 ## Requirements
