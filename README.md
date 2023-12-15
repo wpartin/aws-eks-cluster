@@ -34,6 +34,7 @@ module "eks_cluster" {
 
   enabled = module.eks_cluster_label.enabled
   name    = module.eks_cluster_label.id_full
+  region  = module.eks_cluster_label.region
 
   tags = module.eks_cluster_label.tags
 }
