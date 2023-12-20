@@ -30,7 +30,7 @@ module "eks_cluster_label" {
 /* eks cluster */
 
 module "eks_cluster" {
-  source = "git::github.com/wpartin/terraform-context?ref=v0.1.0"
+  source = "git::github.com/wpartin/terraform-aws-eks-cluster?ref=v0.1.1"
 
   enabled = module.eks_cluster_label.enabled
   name    = module.eks_cluster_label.id_full
