@@ -1,3 +1,9 @@
+variable "cluster_log_types" {
+  description = "A list of the desired control plane logging types to enable."
+  type        = list(string)
+  default     = ["api", "audit"]
+}
+
 variable "cluster_timeouts" {
   description = "An object containing any desired timeout configurations."
   type = object({
@@ -10,6 +16,11 @@ variable "cluster_timeouts" {
     delete = null
     update = null
   }
+}
+
+variable "context" {
+  description = "Pass in the appropriate label context module to this variable."
+  type        = any
 }
 
 variable "create_kms_key" {
@@ -49,6 +60,9 @@ variable "encryption_configuration" {
     resources = list(string)
   })
   default = {
+    provider = {
+      key_arn = null
+    }
     resources = ["secrets"]
   }
 }

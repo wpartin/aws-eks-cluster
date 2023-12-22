@@ -8,9 +8,7 @@ module "eks_cluster" {
   region = module.eks_cluster_label.region
   # subnet_ids    = ["subnet-01234567890abcdef"]
 
-  tags = module.eks_cluster_label.tags
-}
+  context = module.eks_cluster_label.context
 
-output "eks_cluster" {
-  value = module.eks_cluster
+  tags = module.eks_cluster_label.tags
 }
